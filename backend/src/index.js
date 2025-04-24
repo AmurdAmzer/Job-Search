@@ -6,6 +6,12 @@ const mongoose = require('mongoose');
 // Load environment variables
 dotenv.config();
 
+// Check if MongoDB URI is available
+if (!process.env.MONGODB_URI) {
+  console.error('MONGODB_URI is not defined in .env file');
+  process.exit(1);
+}
+
 // Initialize Express app
 const app = express();
 
@@ -19,9 +25,9 @@ app.get('/', (req, res) => {
 });
 
 // Routes will be imported here
-app.use('/api/users', require('./routes/users'));
-app.use('/api/jobs', require('./routes/jobs'));
-app.use('/api/applications', require('./routes/applications'));
+//app.use('/api/users', require('./routes/users'));
+//app.use('/api/jobs', require('./routes/jobs'));
+//app.use('/api/applications', require('./routes/applications'));
 
 // Define PORT
 const PORT = process.env.PORT || 5000;
