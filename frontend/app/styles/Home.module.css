@@ -17,7 +17,7 @@
   position: relative;
   flex: 1;
   width: 100%;
-  height: 300px;
+  height: 70vh;
   min-width: 300px;
 }
 
@@ -118,4 +118,44 @@
   padding: 0.5rem 1rem;
   border: none;
   cursor: pointer;
+}
+
+.heroSection {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* full screen height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 10;
+  max-width: 600px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8); /* translucent white box */
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.heroContent h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.heroContent p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 2rem;
 }
