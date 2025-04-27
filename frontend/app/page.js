@@ -17,12 +17,13 @@ export default function Home() {
         imgSrc="/tracker.png"
         reverse={false}
       />
-      <SplitSection
+      {/*<SplitSection
         title="Never Miss an Opportunity Again"
         text="Get real-time job alerts tailored to your interests."
-        imgSrc="/alerts.png"
+        imgSrc="/shake.jpg"
         reverse={true}
-      />
+      />  */}
+      
       <CTA />
       <Footer />
     </>

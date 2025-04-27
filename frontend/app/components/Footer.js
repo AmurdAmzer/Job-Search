@@ -1,4 +1,5 @@
 // app/components/Footer.js
+import Image from 'next/image'; // <-- import Image
 import styles from '../styles/Home.module.css';
 
 export default function Footer() {
@@ -6,7 +7,12 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.footerTop}>
         <div>
-          <h4>Group 2 Logo</h4>
+          <Image
+            src="/logo.png"  // <-- this loads your logo from /public/logo.png
+            alt="Work Wing Logo" 
+            width={150} 
+            height={50} 
+          />
         </div>
         <div>
           <h4>Quick Links</h4>
