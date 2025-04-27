@@ -1,9 +1,11 @@
 // app/login/page.js
+"use client";
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import styles from './Login.module.css';
 import Image from 'next/image';
+import { signIn } from 'next-auth/react';
 
 export default function LoginPage() {
   return (
@@ -20,7 +22,7 @@ export default function LoginPage() {
             <button className={styles.loginBtn}>Log in</button>
 
             <div className={styles.socialLogins}>
-              <button>Log in with Google</button>
+              <button onClick={() => signIn('google')}>Log in with Google</button>
               <button>Log in with Facebook</button>
               <button>Log in with Apple</button>
             </div>
