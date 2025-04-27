@@ -6,7 +6,7 @@ export default function LoginPage() {
       <header className={styles.header}>
         <div className={styles.logo}>Logo</div>
         <nav className={styles.nav}>
-          <a href="#">Job Listings</a>
+          <a href="#">Job Listingss</a>
           <a href="#">My Profile</a>
           <a href="#">Resources</a>
         </nav>

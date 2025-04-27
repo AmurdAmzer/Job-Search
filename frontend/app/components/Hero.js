@@ -10,7 +10,7 @@ export default function Hero() {
       <div className={styles.heroContent}>
         <h1>Revolutionize Your Job Search Experience Today</h1>
         <p>Smart tools to help you find, apply, and track jobs better.</p>
-        <button className={styles.ctaButton}>Get Started</button>
+        <button className={styles.ctaButton}>Sign Up</button>
       </div>
     </section>
   );
