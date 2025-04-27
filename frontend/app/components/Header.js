@@ -13,7 +13,7 @@ export default function Header() {
         </Link>
       </div>
       <nav className={styles.nav}>
-        <a href="#">About Us</a>
+        <a href="/aboutus">About Us</a>
         {/*<a href="#">My Profile</a> */}
         <a href="#">Resources</a>
       </nav>

@@ -10,7 +10,7 @@ export default function SplitSection({ title, text, imgSrc, reverse }) {
       <div className={styles.splitText}>
         <h2>{title}</h2>
         <p>{text}</p>
-        <button className={styles.ctaButton}>Learn More</button>
+        {/* <button className={styles.ctaButton}>Learn More</button> */}
       </div>
     </section>
   );
