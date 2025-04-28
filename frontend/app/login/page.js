@@ -1,11 +1,11 @@
 // app/login/page.js
 "use client";
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import styles from './Login.module.css';
-import Image from 'next/image';
-import { signIn } from 'next-auth/react';
+import { signIn } from "next-auth/react";
+import Image from "next/image";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import styles from "./Login.module.css";
 
 export default function LoginPage() {
   return (
@@ -16,20 +16,32 @@ export default function LoginPage() {
         <main className={styles.main}>
           <div className={styles.formContainer}>
             <h1 className={styles.title}>Log In</h1>
-            <p className={styles.subtitle}>Lorem ipsum dolor sit amet adipiscing elit.</p>
+            <p className={styles.subtitle}>
+              Lorem ipsum dolor sit amet adipiscing elit.
+            </p>
             <input type="email" placeholder="Email" className={styles.input} />
-            <input type="password" placeholder="Password" className={styles.input} />
+            <input
+              type="password"
+              placeholder="Password"
+              className={styles.input}
+            />
             <button className={styles.loginBtn}>Log in</button>
 
             <div className={styles.socialLogins}>
-              <button onClick={() => signIn('google')}>Log in with Google</button>
-              <button>Log in with Facebook</button>
-              <button>Log in with Apple</button>
+              <button onClick={() => signIn("google")}>
+                Log in with Google
+              </button>
+              <button onClick={() => signIn("linkedin")}>
+                Log in with LinkedIn
+              </button>
+              {/*<button>Log in with Apple</button> */}
             </div>
 
             <div className={styles.footerLinks}>
               <a href="#">Forgot your password?</a>
-              <p>Don’t have an account? <a href="#">Sign up</a></p>
+              <p>
+                Don’t have an account? <a href="#">Sign up</a>
+              </p>
             </div>
           </div>
 
@@ -38,8 +50,8 @@ export default function LoginPage() {
               src={"/shake.jpg"}
               width={600}
               height={400}
-              className='shake'
-              alt='Login Illustration'
+              className="shake"
+              alt="Login Illustration"
             />
           </div>
         </main>
