@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
+import SignUpButton from './SignUpButton';
 
 export default function Hero() {
   return (
@@ -10,7 +11,7 @@ export default function Hero() {
       <div className={styles.heroContent}>
         <h1>Revolutionize Your Job Search Experience Today</h1>
         <p>Smart tools to help you find, apply, and track jobs better.</p>
-        <button className={styles.ctaButton}>Sign Up</button>
+        <SignUpButton className={styles.ctaButton} />
       </div>
     </section>
   );

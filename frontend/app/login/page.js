@@ -6,6 +6,7 @@ import Image from "next/image";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import styles from "./Login.module.css";
+import SignUpButton from '../components/SignUpButton';
 
 export default function LoginPage() {
   return (
@@ -28,13 +29,13 @@ export default function LoginPage() {
             <button className={styles.loginBtn}>Log in</button>
 
             <div className={styles.socialLogins}>
+            <SignUpButton className={styles.signupBtn} />
               <button onClick={() => signIn("google")}>
                 Log in with Google
               </button>
               <button onClick={() => signIn("linkedin")}>
                 Log in with LinkedIn
               </button>
-              {/*<button>Log in with Apple</button> */}
             </div>
 
             <div className={styles.footerLinks}>
