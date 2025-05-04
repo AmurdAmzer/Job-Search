@@ -99,4 +99,47 @@
     color: #777;
     font-size: 1.2rem;
   }
+
+  .userSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-direction: row-reverse;
+  }
+  
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  .logoutBtn {
+    background: none;
+    border: none;
+    color: #002244;       /* Match nav link color */
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .logoutBtn:focus,
+  .logoutBtn:active {
+    outline: none;
+    box-shadow: none;
+    background: none;
+  }
+  
+  body {
+    background-color: white;
+  }
   

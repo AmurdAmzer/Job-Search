@@ -19,48 +19,50 @@ export default function JobsPage() {
   });
 
   return (
-    <div className={styles.container}>
-        <LoggedInHeader></LoggedInHeader>
-      <h1 className={styles.pageTitle}>Job Listings</h1>
-
-      {/*  Search Bar */}
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          placeholder="Search jobs..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className={styles.searchInput}
-        />
+    <>
+      <LoggedInHeader />
+      <div className={styles.container}>
+        <h1 className={styles.pageTitle}>Job Listings</h1>
+  
+        {/*  Search Bar */}
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search jobs..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className={styles.searchInput}
+          />
+        </div>
+  
+        {/* Big Gap */}
+        <div className={styles.gapBelowSearch}></div>
+  
+        {/*  Job Cards Grid */}
+        <div className={styles.jobGrid}>
+          {filteredJobs.length > 0 ? (
+            filteredJobs.map((job, index) => (
+              <div key={index} className={styles.jobCard}>
+                <h2 className={styles.jobTitle}>{job.job_title}</h2>
+                <h3 className={styles.employer}>{job.employer_name}</h3>
+                <p className={styles.description}>
+                  {job.job_description.substring(0, 300)}...
+                </p>
+                <a
+                  href={job.job_apply_link}
+                  className={styles.applyButton}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Apply Now
+                </a>
+              </div>
+            ))
+          ) : (
+            <p className={styles.noResults}>No jobs found.</p>
+          )}
+        </div>
       </div>
-
-      {/* Big Gap */}
-      <div className={styles.gapBelowSearch}></div>
-
-      {/*  Job Cards Grid */}
-      <div className={styles.jobGrid}>
-        {filteredJobs.length > 0 ? (
-          filteredJobs.map((job, index) => (
-            <div key={index} className={styles.jobCard}>
-              <h2 className={styles.jobTitle}>{job.job_title}</h2>
-              <h3 className={styles.employer}>{job.employer_name}</h3>
-              <p className={styles.description}>
-                {job.job_description.substring(0, 300)}...
-              </p>
-              <a
-                href={job.job_apply_link}
-                className={styles.applyButton}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Apply Now
-              </a>
-            </div>
-          ))
-        ) : (
-          <p className={styles.noResults}>No jobs found.</p>
-        )}
-      </div>
-    </div>
+    </>
   );
 }

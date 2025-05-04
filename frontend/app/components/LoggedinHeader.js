@@ -1,17 +1,29 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // ✅ ADDED for redirect
-import styles from '../styles/Home.module.css';
-import Image from 'next/image';
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import styles from "../styles/Home.module.css";
 
 export default function LoggedInHeader() {
-  const router = useRouter(); // ✅ Hook inside the component
+  const router = useRouter();
+  const [initial, setInitial] = useState("?");
+
+  // ✅ Get user's name initial from localStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user?.name) {
+        setInitial(user.name.charAt(0).toUpperCase());
+      }
+    }
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');     // ✅ Clear user session
-    localStorage.removeItem('user');
-    router.push('/');                     // ✅ Redirect to homepage
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    router.push("/");
   };
 
   return (
@@ -26,19 +38,14 @@ export default function LoggedInHeader() {
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/jobs">Job Listings</Link>
         <Link href="/messages">Messages</Link>
-        
-        {/* ✅ CHANGED: real logout handler instead of link */}
-        <button onClick={handleLogout} style={{
-          background: 'none',
-          border: 'none',
-          color: 'inherit',
-          cursor: 'pointer',
-          font: 'inherit',
-          padding: 0,
-          margin: 0
-        }}>
-          Logout
-        </button>
+
+        {/*Avatar + Logout Button Section */}
+        <div className={styles.userSection}>
+        <span onClick={handleLogout} className={styles.logoutBtn}>
+            Log out
+          </span>
+          <div className={styles.avatar}>{initial}</div>
+        </div>
       </nav>
     </header>
   );
