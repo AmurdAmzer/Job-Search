@@ -1,17 +1,57 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Jobs.module.css';
 import jobsData from './mockJobs.json';
 import LoggedInHeader from '../components/LoggedinHeader';
+import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 
 export default function JobsPage() {
   const { jobs } = jobsData;
   const [searchQuery, setSearchQuery] = useState('');
+  const [savedIds, setSavedIds] = useState([]);
+
+  // Currently using localStorage
+  // When using MongoDB:
+  // Replace this with a call to your backend API (e.g., /api/favorites?userId=xyz)
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem('favorites')) || [];
+    const ids = saved.map((job) => job._id);
+    setSavedIds(ids);
+  }, []);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
+
+// Currently using localStorage
+// When using MongoDB:
+// Replace this with a POST to your backend API (e.g., POST /api/favorites)
+const handleSaveToFavorites = async (job) => {
+  const existing = JSON.parse(localStorage.getItem('favorites')) || [];
+  const isSaved = existing.some((j) => j._id === job._id);
+
+  let updated;
+
+  if (isSaved) {
+    // Remove from favorites if already saved
+    updated = existing.filter((j) => j._id !== job._id);
+  } else {
+    // Add to favorites if not already saved
+    updated = [...existing, job];
+  }
+
+  localStorage.setItem('favorites', JSON.stringify(updated));
+  setSavedIds(updated.map((j) => j._id));
+
+  // To use MongoDB:
+  // await fetch('/api/favorites', {
+  //   method: isSaved ? 'DELETE' : 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({ userId: user.email, job })
+  // });
+};
+
 
   const filteredJobs = jobs.filter((job) => {
     const combinedText = `${job.job_title} ${job.employer_name} ${job.job_description}`.toLowerCase();
@@ -23,8 +63,7 @@ export default function JobsPage() {
       <LoggedInHeader />
       <div className={styles.container}>
         <h1 className={styles.pageTitle}>Job Listings</h1>
-  
-        {/*  Search Bar */}
+
         <div className={styles.searchContainer}>
           <input
             type="text"
@@ -34,11 +73,9 @@ export default function JobsPage() {
             className={styles.searchInput}
           />
         </div>
-  
-        {/* Big Gap */}
+
         <div className={styles.gapBelowSearch}></div>
-  
-        {/*  Job Cards Grid */}
+
         <div className={styles.jobGrid}>
           {filteredJobs.length > 0 ? (
             filteredJobs.map((job, index) => (
@@ -48,14 +85,29 @@ export default function JobsPage() {
                 <p className={styles.description}>
                   {job.job_description.substring(0, 300)}...
                 </p>
-                <a
-                  href={job.job_apply_link}
-                  className={styles.applyButton}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Apply Now
-                </a>
+
+                <div className={styles.buttonGroup}>
+                  <a
+                    href={job.job_apply_link}
+                    className={styles.applyButton}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Apply Now
+                  </a>
+
+                  <button
+  onClick={() => handleSaveToFavorites(job)}
+  className={styles.saveButton}
+  title={savedIds.includes(job._id) ? 'Saved' : 'Save to favorites'}
+>
+  {savedIds.includes(job._id) ? (
+    <FaBookmark size={18} color="#0070f3" />
+  ) : (
+    <FaRegBookmark size={18} color="#333" />
+  )}
+</button>
+                </div>
               </div>
             ))
           ) : (
