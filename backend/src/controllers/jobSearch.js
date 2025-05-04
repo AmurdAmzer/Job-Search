@@ -57,5 +57,24 @@ app.get('/favorites/:userId', async (req, res) => {
   }
 });
 
+app.put('/favorite/:jobId', async (req,res) =>{
+  try{
+    const {jobId} = req.params;
+    const update = req.body;
+
+    const updated = await Favorite.findOneAndUpdate(
+      {jobId},
+      update, {new: true}
+    );
+    if(!updated){
+      return res.status(404).json({error: "Favorite not found"});
+    }
+
+  } 
+  catch(err){
+    res.status(500).json({error:"Failed to update", detail: err.message})
+  }
+});
+
 
 export { searchJobs };

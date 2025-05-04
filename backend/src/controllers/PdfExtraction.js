@@ -10,8 +10,11 @@ import pdfParse from 'pdf-parse';
 import Favorite from './Favorite.js';
 import InterviewPrep from './InterviewPrep.js';
 
-
 dotenv.config();
+
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log(' Connected to MongoDB Atlas'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
 const app = express();
 const port = 3001;
@@ -21,19 +24,8 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// MongoDB connection (cleaned)
-mongoose.connect('mongodb://localhost:27017/jobtracker')
-  .then(() => console.log(' Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
-
 // Multer config for file uploads
 const upload = multer({ dest: 'uploads/' });
-
-// Mongoose schema and model
-
-//const Fav = mongoose.model('Favorite', favoriteSchema);
-//const InterviewPrep = mongoose.model('InterviewPrep', interviewPrepSchema);
-
 
 // Resume Upload Skill Extraction and Job Matching
 app.post('/upload', upload.single('resume'), async (req, res) => {
@@ -42,7 +34,6 @@ app.post('/upload', upload.single('resume'), async (req, res) => {
     const data = await pdfParse(dataBuffer);
     const resumeText = data.text;
 
-    // Ask OpenAI to extract job skills
     const openaiResponse = await axios.post(
       'https://api.openai.com/v1/chat/completions',
       {
@@ -91,14 +82,16 @@ app.post('/upload', upload.single('resume'), async (req, res) => {
     const limitedSkills = skills.slice(0, 8);
     const formattedQuery = limitedSkills.map(skill => `"${skill}"`).join(' OR ');
 
+    const jobLocation = req.body.location || 'remote';
     console.log('JSearch Query:', formattedQuery);
+    console.log('Job Search Location:', jobLocation);
 
     const jsearchResponse = await axios.get('https://jsearch.p.rapidapi.com/search', {
       params: {
         query: formattedQuery,
-        location: 'remote',
+        location: jobLocation,
         page: 1,
-        num_pages: 1
+        num_pages: 5
       },
       headers: {
         'X-RapidAPI-Key': process.env.JSEARCH_API_KEY,
@@ -108,9 +101,7 @@ app.post('/upload', upload.single('resume'), async (req, res) => {
 
     const jobListings = jsearchResponse.data.data.map(job => {
       const jobText = (job.job_description || '').toLowerCase();
-      const matchCount = skills.filter(skill =>
-        jobText.includes(skill.toLowerCase())
-      ).length;
+      const matchCount = skills.filter(skill => jobText.includes(skill.toLowerCase())).length;
       const relevance = Math.round((matchCount / skills.length) * 100);
       const jobId = `${job.job_title}-${job.employer_name}`.replace(/\s+/g, '-').toLowerCase();
 
@@ -119,6 +110,7 @@ app.post('/upload', upload.single('resume'), async (req, res) => {
         jobTitle: job.job_title,
         employer: job.employer_name,
         JobDescription: job.job_description,
+        location: `${job.job_city || 'Unknown'}, ${job.job_state || 'N/A'}`,
         applyLink: job.job_apply_link,
         relevanceScore: relevance,
         save: false
@@ -139,7 +131,6 @@ app.post('/upload', upload.single('resume'), async (req, res) => {
   }
 });
 
-// Save job to favorites
 app.post('/favorites', async (req, res) => {
   const { userId, jobId, jobTitle, employer, applyLink } = req.body;
 
@@ -149,14 +140,7 @@ app.post('/favorites', async (req, res) => {
       return res.json({ message: 'Already saved' });
     }
 
-    const favorite = new Favorite({
-      userId,
-      jobId,
-      jobTitle,
-      employer,
-      applyLink
-    });
-
+    const favorite = new Favorite({ userId, jobId, jobTitle, employer, applyLink });
     await favorite.save();
     res.json({ message: 'Saved to favorites', favorite });
 
@@ -165,7 +149,6 @@ app.post('/favorites', async (req, res) => {
   }
 });
 
-// Get all saved jobs for a user
 app.get('/favorites/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
@@ -176,18 +159,19 @@ app.get('/favorites/:userId', async (req, res) => {
   }
 });
 
-// Generate interview prep from job info
-
 app.post('/interview-prep', async (req, res) => {
   const {
     userId = 'demo-user',
     jobId = 'unknown-job',
     jobTitle,
     jobDescription,
+    JobDescription,
     skills = []
   } = req.body;
 
-  if (!jobTitle || !jobDescription) {
+  const finalJobDescription = jobDescription || JobDescription;
+
+  if (!jobTitle || !finalJobDescription) {
     return res.status(400).json({ error: "Missing jobTitle or jobDescription" });
   }
 
@@ -201,7 +185,7 @@ Based on the following job title and description, generate:
 4. A list of 3–5 helpful study resources with links (websites, docs, tutorials)
 
 Job Title: ${jobTitle}
-Job Description: ${jobDescription}
+Job Description: ${finalJobDescription}
 Candidate Skills: ${skills.join(', ') || 'N/A'}
 
 Return your response as a JSON object with the keys:
@@ -233,12 +217,11 @@ Do not include any markdown or explanation.
     const clean = content.replace(/```json|```/g, '').trim();
     const interviewPrep = JSON.parse(clean);
 
-    // Save the prep to MongoDB
     const savedPrep = await InterviewPrep.create({
       userId,
       jobId,
       jobTitle,
-      jobDescription,
+      jobDescription: finalJobDescription,
       skills,
       prep: interviewPrep
     });
@@ -246,7 +229,7 @@ Do not include any markdown or explanation.
     res.json({ message: 'Interview prep generated and saved', data: savedPrep });
 
   } catch (err) {
-    console.error(" Interview prep error:", err);
+    console.error("Interview prep error:", err);
     res.status(500).json({ error: "Failed to generate interview prep", detail: err.message });
   }
 });
@@ -258,14 +241,10 @@ app.get('/interview-prep/:userId', async (req, res) => {
     const prepResults = await InterviewPrep.find({ userId }).sort({ createdAt: -1 });
     res.json({ prepResults });
   } catch (err) {
-    res.status(500).json({
-      error: 'Failed to fetch interview prep history',
-      detail: err.message
-    });
+    res.status(500).json({ error: 'Failed to fetch interview prep history', detail: err.message });
   }
 });
 
-// Start the server
 app.listen(port, () => {
-  console.log(` Server running at http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });
