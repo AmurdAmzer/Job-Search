@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import styles from './Jobs.module.css';
-import jobsData from './mockJobs.json'; // Adjust path if needed
-import Header from '../components/Header';
+import jobsData from './mockJobs.json';
 import LoggedInHeader from '../components/LoggedinHeader';
 
 export default function JobsPage() {
@@ -24,7 +23,7 @@ export default function JobsPage() {
         <LoggedInHeader></LoggedInHeader>
       <h1 className={styles.pageTitle}>Job Listings</h1>
 
-      {/* 🔍 Search Bar */}
+      {/*  Search Bar */}
       <div className={styles.searchContainer}>
         <input
           type="text"
@@ -35,10 +34,10 @@ export default function JobsPage() {
         />
       </div>
 
-      {/* ⬇ Big Gap */}
+      {/* Big Gap */}
       <div className={styles.gapBelowSearch}></div>
 
-      {/* 📄 Job Cards Grid */}
+      {/*  Job Cards Grid */}
       <div className={styles.jobGrid}>
         {filteredJobs.length > 0 ? (
           filteredJobs.map((job, index) => (
