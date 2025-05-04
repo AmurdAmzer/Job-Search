@@ -20,19 +20,19 @@ export default function JobsPage() {
   }, []);
 
   // Fetch jobs from MongoDB on mount
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await fetch('http://localhost:9999/api/jobs');
-        const data = await response.json();
-        setJobs(data);
-      } catch (err) {
-        console.error('Failed to load jobs:', err);
-        setError('Could not load jobs');
-      }
-    };
-    fetchJobs();
-  }, []);
+  // useEffect(() => {
+  //   const fetchJobs = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:9999/api/jobs');
+  //       const data = await response.json();
+  //       setJobs(data);
+  //     } catch (err) {
+  //       console.error('Failed to load jobs:', err);
+  //       setError('Could not load jobs');
+  //     }
+  //   };
+  //   fetchJobs();
+  // }, []);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
