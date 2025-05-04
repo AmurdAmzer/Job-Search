@@ -1,18 +1,19 @@
 'use client';
+
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'; //for redirect
 import styles from './Signup.module.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 export default function SignUpPage() {
+  const router = useRouter(); //Hook inside the component
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setSuccess('');
 
     try {
       const res = await fetch('http://localhost:5000/api/users/register', {
@@ -22,12 +23,18 @@ export default function SignUpPage() {
       });
 
       const data = await res.json();
+
       if (!res.ok) {
         setError(data.message || 'Something went wrong');
-      } else {
-        setSuccess('User registered successfully!');
-        setForm({ name: '', email: '', password: '' });
+        return;
       }
+
+      //Save user and token
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data));
+
+      //Redirect to /jobs
+      router.push('/jobs');
     } catch (err) {
       setError('Network error. Please try again.');
     }
@@ -46,7 +53,7 @@ export default function SignUpPage() {
               type="text"
               placeholder="Name"
               value={form.name}
-              onChange={e => setForm({ ...form, name: e.target.value })}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
               required
             />
             <input
@@ -54,7 +61,7 @@ export default function SignUpPage() {
               type="email"
               placeholder="Email"
               value={form.email}
-              onChange={e => setForm({ ...form, email: e.target.value })}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
               required
             />
             <input
@@ -62,12 +69,11 @@ export default function SignUpPage() {
               type="password"
               placeholder="Password"
               value={form.password}
-              onChange={e => setForm({ ...form, password: e.target.value })}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
               required
             />
             <button type="submit" className={styles.signupBtn}>Sign Up</button>
             {error && <p className={styles.errorMessage}>{error}</p>}
-            {success && <p style={{ color: 'green' }}>{success}</p>}
           </form>
           <div className={styles.footerLinks}>
             <p>Already have an account? <a href="/login">Log In</a></p>

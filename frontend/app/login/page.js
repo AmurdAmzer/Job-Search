@@ -1,6 +1,8 @@
 // app/login/page.js
 "use client";
 
+import { useState } from "react"; //added for form state
+import { useRouter } from "next/navigation"; //Moved higher
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Footer from "../components/Footer";
@@ -9,6 +11,38 @@ import styles from "./Login.module.css";
 import SignUpButton from '../components/SignUpButton';
 
 export default function LoginPage() {
+  const router = useRouter(); 
+  const [email, setEmail] = useState(''); // state added
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  //login handler
+  const handleLogin = async () => {
+    setError('');
+    try {
+      const res = await fetch('http://localhost:5000/api/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.message || 'Login failed');
+        return;
+      }
+
+      // ✅ Save user and token
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data));
+
+      // Redirect to job listings page
+      router.push('/jobs');
+    } catch (err) {
+      setError('Network error. Please try again.');
+    }
+  };
+
   return (
     <>
       <Header />
@@ -20,16 +54,33 @@ export default function LoginPage() {
             <p className={styles.subtitle}>
               Lorem ipsum dolor sit amet adipiscing elit.
             </p>
-            <input type="email" placeholder="Email" className={styles.input} />
+
+            {/* input now uses state */}
+            <input
+              type="email"
+              placeholder="Email"
+              className={styles.input}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <input
               type="password"
               placeholder="Password"
               className={styles.input}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
-            <button className={styles.loginBtn}>Log in</button>
+
+            {/* button calls login */}
+            <button onClick={handleLogin} className={styles.loginBtn}>
+              Log in
+            </button>
+
+            {/* Show login error if present */}
+            {error && <p style={{ color: 'red', marginTop: '0.5rem' }}>{error}</p>}
 
             <div className={styles.socialLogins}>
-            <SignUpButton className={styles.signupBtn} />
+              <SignUpButton className={styles.signupBtn} />
               <button onClick={() => signIn("google")}>
                 Log in with Google
               </button>
