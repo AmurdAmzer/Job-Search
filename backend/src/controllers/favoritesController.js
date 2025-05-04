@@ -1,4 +1,4 @@
-const Favorite = require('./Favorite');
+const Favorite = require('../models/Favorite');
 
 const saveFavorite = async (req, res) => {
   const { userId, jobId, jobTitle, employer, applyLink } = req.body;
