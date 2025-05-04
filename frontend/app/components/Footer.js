@@ -1,6 +1,7 @@
 // app/components/Footer.js
 import Image from 'next/image'; // <-- import Image
 import styles from '../styles/Home.module.css';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -17,7 +18,7 @@ export default function Footer() {
         <div>
           <h4>Quick Links</h4>
           <ul>
-            <li>About</li>
+          <li><Link href="/aboutus">About</Link></li>
             <li>Blog</li>
             <li>Support</li>
           </ul>

@@ -34,8 +34,8 @@ export default function LoggedInHeader() {
         </Link>
       </div>
       <nav className={styles.nav}>
-        <Link href="/account-settings">Account Settings</Link>
-        <Link href="/dashboard">Dashboard</Link>
+        {/*<Link href="/account-settings">Account Settings</Link> */}
+        <Link href="/favorites">Favorites</Link>
         <Link href="/jobs">Job Listings</Link>
         <Link href="/messages">Messages</Link>
 
