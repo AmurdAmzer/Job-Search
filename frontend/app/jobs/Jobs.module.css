@@ -171,14 +171,14 @@
     cursor: default;
   }
   
-  .searchContainer {
+  /* .searchContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 1.5rem;
   }
-  
-  .searchInput {
+   */
+  /* .searchInput {
     width: 100%;
     max-width: 400px;
     padding: 0.5rem;
@@ -186,6 +186,55 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-bottom: 1rem;
+  } */
+  
+  .buttonWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  /* .searchButton {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #0070f3;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .searchButton:hover {
+    background-color: #005dc1;
+    background-color: #0070f3;
+
+  } */
+  .searchContainer {
+    width: 100%;
+    max-width: 700px;
+    padding: 0 1rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .searchInput {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: 2px solid #000;
+    border-radius: 9999px;
+    font-size: 1.2rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+  }
+  
+  .searchInput:focus {
+    outline: none;
+    border-color: #1a1a1a;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   }
   
   .buttonWrapper {
@@ -195,18 +244,19 @@
   }
   
   .searchButton {
-    padding: 0.5rem 1.5rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-    background-color: #1A1A40;
+    padding: 0.75rem 1.5rem;
+    background-color: #000;
     color: white;
+    border: none;
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
   }
   
   .searchButton:hover {
-    /* background-color: #005dc1; */
-    background-color: #1A1A40;
-
+    background-color: #556571;
   }
-   
+  
