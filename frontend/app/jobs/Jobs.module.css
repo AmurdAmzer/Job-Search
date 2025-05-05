@@ -2,7 +2,6 @@
     padding: 4rem 2rem;
     background-color: #f7f7f7;
     min-height: 100vh;
-    /* No forced flexbox layout */
   }
   
   .pageTitle {
@@ -12,23 +11,24 @@
     margin-bottom: 2rem;
   }
   
-  .searchContainer {
+  /* .searchContainer {
     width: 100%;
+    display: flex;
     max-width: 700px;
     padding: 0 1rem;
-    margin: 0 auto; /* Center the search bar */
+    margin: 0 auto; 
   }
   
   .searchInput {
     width: 100%;
     padding: 1rem 1.5rem;
     border: 2px solid #000;
-    border-radius: 9999px; /* Nice pill shape */
+    border-radius: 9999px; 
     font-size: 1.2rem;
     background-color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-  }
+  } */
   
   .searchInput:focus {
     outline: none;
@@ -171,5 +171,42 @@
     cursor: default;
   }
   
+  .searchContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
   
+  .searchInput {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
   
+  .buttonWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .searchButton {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #1A1A40;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .searchButton:hover {
+    /* background-color: #005dc1; */
+    background-color: #1A1A40;
+
+  }
+   

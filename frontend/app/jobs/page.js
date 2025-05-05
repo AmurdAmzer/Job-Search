@@ -90,7 +90,9 @@ export default function JobsPage() {
             onChange={handleSearchChange}
             className={styles.searchInput}
           />
+          <div className={styles.buttonWrapper}>
           <button type="submit" className={styles.searchButton}>Search</button>
+          </div>
         </form>
 
         <div className={styles.gapBelowSearch}></div>
