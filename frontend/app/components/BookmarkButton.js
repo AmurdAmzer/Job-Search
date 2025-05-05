@@ -1,16 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 
 export default function BookmarkButton({ job, savedIds, setSavedIds }) {
-  const jobId = job._id || job.job_id || job.sourceId;
-  const isInitiallySaved = savedIds.includes(jobId);
-  const [isSaved, setIsSaved] = useState(isInitiallySaved);
-
-  useEffect(() => {
-    setIsSaved(savedIds.includes(jobId));
-  }, [savedIds, jobId]);
+  const jobId = job.sourceId || job.jobId || job._id || job.job_id;
+  const isSaved = savedIds.includes(jobId); // ✅ Use only prop
 
   const handleClick = async () => {
     const stored = JSON.parse(localStorage.getItem('user'));
@@ -32,7 +26,7 @@ export default function BookmarkButton({ job, savedIds, setSavedIds }) {
         console.error('❌ Failed to remove favorite:', err);
       }
     } else {
-      // Save to backend
+      // POST to backend
       try {
         await fetch('http://localhost:9999/api/favorites', {
           method: 'POST',
@@ -40,6 +34,7 @@ export default function BookmarkButton({ job, savedIds, setSavedIds }) {
           body: JSON.stringify({
             userId,
             jobId,
+            sourceId: jobId,
             title: job.title || job.job_title,
             company: job.company || job.employer_name,
             location: job.location || 'Remote',
@@ -50,10 +45,8 @@ export default function BookmarkButton({ job, savedIds, setSavedIds }) {
             applicationDeadline: null,
             externalUrl: job.externalUrl || job.job_apply_link || '#',
             source: 'Manual',
-            sourceId: jobId,
           }),
         });
-
         setSavedIds((prev) => [...prev, jobId]);
       } catch (err) {
         console.error('❌ Failed to save favorite:', err);
