@@ -1,28 +1,44 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import styles from './Favorites.module.css'
-import LoggedInHeader from '../components/LoggedinHeader'
+import React, { useEffect, useState } from 'react';
+import styles from './Favorites.module.css';
+import LoggedInHeader from '../components/LoggedinHeader';
 
 export default function FavoritesPage() {
-  const [favorites, setFavorites] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
+  const [favorites, setFavorites] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    async function fetchFavorites() {
-      const res = await fetch('/mockFavorites.json')
-      const data = await res.json()
-      setFavorites([data.favorite]) // Add more later as needed
-    }
+    const fetchFavorites = async () => {
+      // ✅ ADDED: Get logged-in user info from localStorage
+      const stored = JSON.parse(localStorage.getItem('user'));
+      const userId = stored?.user?._id || stored?.user?.id;
 
-    fetchFavorites()
-  }, [])
+      // ✅ ADDED: Skip fetch if not logged in
+      if (!userId) {
+        console.error('No user ID found in localStorage');
+        return;
+      }
 
+      // ✅ ADDED: Fetch favorites from backend API
+      try {
+        const res = await fetch(`http://localhost:9999/api/favorites/${userId}`);
+        const data = await res.json();
+        setFavorites(data); //  backend is returning an array, not an object with
+      } catch (err) {
+        console.error('❌ Failed to fetch favorites:', err);
+      }
+    };
+
+    fetchFavorites(); // ✅ ADDED: Fetch favorites when component mounts
+  }, []);
+
+  // ✅ MODIFIED: Use real job fields from MongoDB (title, company)
   const filteredFavorites = favorites.filter(
     (job) =>
-      job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.employer.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+      job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      job.company.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -49,25 +65,22 @@ export default function FavoritesPage() {
           <div className={styles.jobGrid}>
             {filteredFavorites.map((job) => (
               <div key={job._id} className={styles.jobCard}>
-                <h2 className={styles.jobTitle}>{job.jobTitle}</h2>
-                <p className={styles.employer}>{job.employer}</p>
+                <h2 className={styles.jobTitle}>{job.title}</h2>
+                <p className={styles.employer}>{job.company}</p>
                 <p className={styles.savedDate}>
                   Saved on {new Date(job.savedAt).toLocaleDateString()}
                 </p>
 
                 <div className={styles.buttonGroup}>
                   <a
-                    href={job.applyLink}
+                    href={job.externalUrl || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.applyButton}
                   >
                     Apply Now
                   </a>
-                  <a
-                    href="/interview-prep"
-                    className={styles.applyButton}
-                  >
+                  <a href="/interview-prep" className={styles.applyButton}>
                     Interview Prep
                   </a>
                 </div>
@@ -77,5 +90,5 @@ export default function FavoritesPage() {
         )}
       </div>
     </>
-  )
+  );
 }
