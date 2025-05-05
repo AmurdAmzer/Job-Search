@@ -3,37 +3,37 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Favorites.module.css';
 import LoggedInHeader from '../components/LoggedinHeader';
+import BookmarkButton from '../components/BookmarkButton';
 
 export default function FavoritesPage() {
   const [favorites, setFavorites] = useState([]);
+  const [savedIds, setSavedIds] = useState([]); // Track saved IDs
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchFavorites = async () => {
-      // Get logged-in user info from localStorage
       const stored = JSON.parse(localStorage.getItem('user'));
       const userId = stored?.user?._id || stored?.user?.id;
 
-      //Skip fetch if not logged in
       if (!userId) {
         console.error('No user ID found in localStorage');
         return;
       }
 
-      // Fetch favorites from backend API
       try {
         const res = await fetch(`http://localhost:9999/api/favorites/${userId}`);
         const data = await res.json();
-        setFavorites(data); // backend is returning an array, not an object with
+        setFavorites(data);
+        const ids = data.map((job) => job.sourceId || job.jobId); // Extract IDs
+        setSavedIds(ids);
       } catch (err) {
         console.error('❌ Failed to fetch favorites:', err);
       }
     };
 
-    fetchFavorites(); //Fetch favorites when component mounts
+    fetchFavorites();
   }, []);
 
-  //Use real job fields from MongoDB (title, company)
   const filteredFavorites = favorites.filter(
     (job) =>
       job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -63,29 +63,43 @@ export default function FavoritesPage() {
           <p className={styles.noResults}>No matching saved jobs found.</p>
         ) : (
           <div className={styles.jobGrid}>
-            {filteredFavorites.map((job) => (
-              <div key={job._id} className={styles.jobCard}>
-                <h2 className={styles.jobTitle}>{job.title}</h2>
-                <p className={styles.employer}>{job.company}</p>
-                <p className={styles.savedDate}>
-                  Saved on {new Date(job.savedAt).toLocaleDateString()}
-                </p>
+            {filteredFavorites.map((job) => {
+              const jobId = job.sourceId || job.jobId;
+              return (
+                <div key={job._id} className={styles.jobCard}>
+                  <h2 className={styles.jobTitle}>{job.title}</h2>
+                  <p className={styles.employer}>{job.company}</p>
+                  <p className={styles.savedDate}>
+                    Saved on {new Date(job.savedAt).toLocaleDateString()}
+                  </p>
 
-                <div className={styles.buttonGroup}>
-                  <a
-                    href={job.externalUrl || '#'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.applyButton}
-                  >
-                    Apply Now
-                  </a>
-                  <a href="/interview-prep" className={styles.applyButton}>
-                    Interview Prep
-                  </a>
+                  <div className={styles.buttonGroup}>
+  <div className={styles.buttonRow}>
+    <a
+      href={job.externalUrl || '#'}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.applyButton}
+    >
+      Apply Now
+    </a>
+    <BookmarkButton
+      job={job}
+      savedIds={savedIds}
+      setSavedIds={(updatedIds) => {
+        setSavedIds(updatedIds);
+        if (!updatedIds.includes(jobId)) {
+          setFavorites((prev) =>
+            prev.filter((j) => (j.sourceId || j.jobId) !== jobId)
+          );
+        }
+      }}
+    />
+  </div>
+</div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

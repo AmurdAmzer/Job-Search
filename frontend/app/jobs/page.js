@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import LoggedInHeader from "../components/LoggedinHeader";
+import BookmarkButton from '../components/BookmarkButton';
 import styles from "./Jobs.module.css";
 
 export default function JobsPage() {
@@ -167,17 +168,7 @@ export default function JobsPage() {
                     >
                       Apply Now
                     </a>
-                    <button
-                      onClick={() => handleSaveToFavorites(job)}
-                      className={styles.saveButton}
-                      title={isSaved ? "Saved" : "Save to favorites"}
-                    >
-                      {isSaved ? (
-                        <FaBookmark size={18} color="#0070f3" />
-                      ) : (
-                        <FaRegBookmark size={18} color="#333" />
-                      )}
-                    </button>
+                    <BookmarkButton job={job} savedIds={savedIds} setSavedIds={setSavedIds} />
                   </div>
                 </div>
               );
