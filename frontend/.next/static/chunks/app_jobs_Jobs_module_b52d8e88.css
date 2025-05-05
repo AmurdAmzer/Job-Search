@@ -1,0 +1,212 @@
+/* [project]/app/jobs/Jobs.module.css [app-client] (css) */
+.Jobs-module__dp_mcW__container {
+  padding: 4rem 2rem;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+}
+
+.Jobs-module__dp_mcW__pageTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.Jobs-module__dp_mcW__searchInput:focus {
+  outline: none;
+  border-color: #1a1a1a;
+  box-shadow: 0 6px 15px #0003;
+}
+
+.Jobs-module__dp_mcW__gapBelowSearch {
+  height: 6rem;
+}
+
+.Jobs-module__dp_mcW__jobGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.Jobs-module__dp_mcW__jobCard {
+  background: #fff;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform .3s;
+}
+
+.Jobs-module__dp_mcW__jobCard:hover {
+  transform: translateY(-5px);
+}
+
+.Jobs-module__dp_mcW__jobTitle {
+  font-size: 1.5rem;
+  margin-bottom: .5rem;
+  color: #000;
+}
+
+.Jobs-module__dp_mcW__employer {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.Jobs-module__dp_mcW__description {
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 1.5rem;
+}
+
+.Jobs-module__dp_mcW__applyButton {
+  background-color: #000;
+  color: #fff;
+  padding: .75rem 1.5rem;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.Jobs-module__dp_mcW__noResults {
+  text-align: center;
+  margin-top: 2rem;
+  color: #777;
+  font-size: 1.2rem;
+}
+
+.Jobs-module__dp_mcW__userSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-direction: row-reverse;
+}
+
+.Jobs-module__dp_mcW__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.Jobs-module__dp_mcW__logoutBtn {
+  background: none;
+  border: none;
+  color: #024;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.Jobs-module__dp_mcW__logoutBtn:focus, .Jobs-module__dp_mcW__logoutBtn:active {
+  outline: none;
+  box-shadow: none;
+  background: none;
+}
+
+body {
+  background-color: #fff;
+}
+
+.Jobs-module__dp_mcW__buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+.Jobs-module__dp_mcW__saveButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: .4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .2s;
+  color: #333;
+}
+
+.Jobs-module__dp_mcW__saveButton:hover {
+  transform: scale(1.1);
+}
+
+.Jobs-module__dp_mcW__saveButton:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.Jobs-module__dp_mcW__buttonWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.Jobs-module__dp_mcW__searchContainer {
+  width: 100%;
+  max-width: 700px;
+  padding: 0 1rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Jobs-module__dp_mcW__searchInput {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: 2px solid #000;
+  border-radius: 9999px;
+  font-size: 1.2rem;
+  background-color: #fff;
+  box-shadow: 0 4px 12px #0000001a;
+  transition: all .3s;
+  margin-bottom: 1rem;
+}
+
+.Jobs-module__dp_mcW__searchInput:focus {
+  outline: none;
+  border-color: #1a1a1a;
+  box-shadow: 0 6px 15px #0003;
+}
+
+.Jobs-module__dp_mcW__buttonWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.Jobs-module__dp_mcW__searchButton {
+  padding: .75rem 1.5rem;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px #0000001a;
+  transition: background-color .3s;
+}
+
+.Jobs-module__dp_mcW__searchButton:hover {
+  background-color: #556571;
+}
+
+/*# sourceMappingURL=app_jobs_Jobs_module_b52d8e88.css.map*/

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/devereweaver/Job-Search/frontend/app/components/SignUpButton.js"],"sourcesContent":["'use client';\n\nimport { useRouter } from 'next/navigation';\n\nexport default function SignUpButton({ label = 'Sign Up', className = '' }) {\n  const router = useRouter();\n\n  return (\n    <button\n      onClick={() => router.push('/signup')}\n      className={className}\n    >\n      {label}\n    </button>\n  );\n}"],"names":[],"mappings":";;;;AAEA;;;AAFA;;AAIe,SAAS,aAAa,EAAE,QAAQ,SAAS,EAAE,YAAY,EAAE,EAAE;;IACxE,MAAM,SAAS,CAAA,GAAA,qIAAA,CAAA,YAAS,AAAD;IAEvB,qBACE,6LAAC;QACC,SAAS,IAAM,OAAO,IAAI,CAAC;QAC3B,WAAW;kBAEV;;;;;;AAGP;GAXwB;;QACP,qIAAA,CAAA,YAAS;;;KADF","debugId":null}}]
+}

@@ -1,0 +1,97 @@
+/* [project]/app/login/Login.module.css [app-client] (css) */
+.Login-module__t61pwq__container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.Login-module__t61pwq__main {
+  display: flex;
+  flex: 1;
+}
+
+.Login-module__t61pwq__formContainer {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Login-module__t61pwq__title {
+  font-size: 2rem;
+  font-weight: bold;
+  border: 2px solid #00f;
+  padding: .5rem 2rem;
+  margin-bottom: 1rem;
+}
+
+.Login-module__t61pwq__subtitle {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.Login-module__t61pwq__input {
+  width: 100%;
+  max-width: 300px;
+  padding: .5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+}
+
+.Login-module__t61pwq__loginBtn {
+  width: 100%;
+  max-width: 300px;
+  background: #000;
+  color: #fff;
+  padding: .5rem;
+  margin-bottom: 1.5rem;
+}
+
+.Login-module__t61pwq__socialLogins button {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: .5rem;
+}
+
+.Login-module__t61pwq__footerLinks {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.Login-module__t61pwq__imageContainer {
+  flex: 1;
+  background: linear-gradient(to bottom right, #f0f4f8, #d9e2ec);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.Login-module__t61pwq__placeholder {
+  width: 100px;
+  height: 100px;
+  background: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes Login-module__t61pwq__fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.Login-module__t61pwq__formContainer {
+  animation: .8s forwards Login-module__t61pwq__fadeInUp;
+}
+
+/*# sourceMappingURL=app_login_Login_module_b52d8e88.css.map*/
