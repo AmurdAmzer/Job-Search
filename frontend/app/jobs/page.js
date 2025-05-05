@@ -12,11 +12,11 @@ export default function JobsPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // ✅ ADDED: Fetch saved favorites from MongoDB using logged-in user ID
+  // ADDED: Fetch saved favorites from MongoDB using logged-in user ID
   useEffect(() => {
     const fetchSaved = async () => {
-      const user = JSON.parse(localStorage.getItem("user")); // ✅ ADDED
-      const userId = user?._id; // ✅ ADDED
+      const user = JSON.parse(localStorage.getItem("user")); 
+      const userId = user?._id; 
 
       if (!userId) return;
 
@@ -67,7 +67,7 @@ export default function JobsPage() {
   // ✅ MODIFIED: Save favorite to MongoDB instead of localStorage
   const handleSaveToFavorites = async (job) => {
     const stored = JSON.parse(localStorage.getItem("user"));
-    const userId = stored?.user?._id || stored?.user?.id; // ✅ updated to access nested structure
+    const userId = stored?.user?._id || stored?.user?.id; //updated to access nested structure
 
     if (!userId) {
       alert("You must be logged in to save favorites.");
@@ -78,7 +78,7 @@ export default function JobsPage() {
     const isSaved = savedIds.includes(jobId);
 
     if (isSaved) {
-      // Optional: call DELETE endpoint if backend supports it
+      //call DELETE endpoint if backend supports it
       setSavedIds((prev) => prev.filter((id) => id !== jobId));
       return;
     }
@@ -140,7 +140,7 @@ export default function JobsPage() {
           {jobs.length > 0 ? (
             jobs.map((job, index) => {
               const jobId = job._id || job.job_id || job.sourceId;
-              const isSaved = savedIds.includes(jobId); // ✅ UPDATED
+              const isSaved = savedIds.includes(jobId); // UPDATED
 
               return (
                 <div key={index} className={styles.jobCard}>

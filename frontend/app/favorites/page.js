@@ -10,30 +10,30 @@ export default function FavoritesPage() {
 
   useEffect(() => {
     const fetchFavorites = async () => {
-      // ✅ ADDED: Get logged-in user info from localStorage
+      // Get logged-in user info from localStorage
       const stored = JSON.parse(localStorage.getItem('user'));
       const userId = stored?.user?._id || stored?.user?.id;
 
-      // ✅ ADDED: Skip fetch if not logged in
+      //Skip fetch if not logged in
       if (!userId) {
         console.error('No user ID found in localStorage');
         return;
       }
 
-      // ✅ ADDED: Fetch favorites from backend API
+      // Fetch favorites from backend API
       try {
         const res = await fetch(`http://localhost:9999/api/favorites/${userId}`);
         const data = await res.json();
-        setFavorites(data); //  backend is returning an array, not an object with
+        setFavorites(data); // backend is returning an array, not an object with
       } catch (err) {
         console.error('❌ Failed to fetch favorites:', err);
       }
     };
 
-    fetchFavorites(); // ✅ ADDED: Fetch favorites when component mounts
+    fetchFavorites(); //Fetch favorites when component mounts
   }, []);
 
-  // ✅ MODIFIED: Use real job fields from MongoDB (title, company)
+  //Use real job fields from MongoDB (title, company)
   const filteredFavorites = favorites.filter(
     (job) =>
       job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
