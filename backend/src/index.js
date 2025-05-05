@@ -364,7 +364,6 @@ router.get('/interview-prep/:id', async (req, res) => {
 async function searchJobs(queryText) {
   const formattedQuery = queryText
     .split('\n')
-    .filter(line => line.startsWith('-'))
     .map(skill => skill.replace('-', '').trim())
     .join(', ');
 
@@ -377,7 +376,7 @@ async function searchJobs(queryText) {
       params: {
         query: formattedQuery,
         page: '1',
-        num_pages: '1',
+        num_pages: '10',
         country: 'us',
       },
     });
