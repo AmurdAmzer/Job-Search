@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Favorites.module.css';
 import LoggedInHeader from '../components/LoggedinHeader';
 import BookmarkButton from '../components/BookmarkButton';
+import InterviewPrepButton from '../components/InterviewPrepButton';
 
 export default function FavoritesPage() {
   const [favorites, setFavorites] = useState([]);
@@ -101,6 +102,7 @@ export default function FavoritesPage() {
   }}
 />
   </div>
+  <InterviewPrepButton jobId={job._id || job.sourceId} />
 </div>
                 </div>
               );
