@@ -139,9 +139,9 @@
     background: none;
   }
   
-  body {
+  /*body {
     background-color: white;
-  }
+  } */
 
   .buttonGroup {
     display: flex;
