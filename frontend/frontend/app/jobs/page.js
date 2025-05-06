@@ -23,7 +23,8 @@ export default function JobsPage() {
 
       try {
         const res = await fetch(
-          `http://localhost:9999/api/favorites/${userId}`
+          // `http://localhost:9999/api/favorites/${userId}`
+          `https://job-search-1-k9sx.onrender.com/api/favorites/${userId}`
         );
         const data = await res.json();
         const ids = data.favorites.map((job) => job.sourceId || job.jobId);
@@ -49,7 +50,7 @@ export default function JobsPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:9999/api/search-jobs?queryText=${encodeURIComponent(
+        `https://job-search-1-k9sx.onrender.com/api/search-jobs?queryText=${encodeURIComponent(
           searchQuery.trim()
         )}`
       );
