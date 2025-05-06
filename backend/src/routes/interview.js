@@ -1,8 +1,8 @@
 const express = require('express');
-const { generateInterviewPrep, getInterviewPrepHistory } = require('../controllers/interviewController');
 const router = express.Router();
+const { generateInterviewPrep } = require('../controllers/interviewController');
 
-router.post('/', generateInterviewPrep);
-router.get('/:userId', getInterviewPrepHistory);
+// Route: POST /api/interview-prep/:jobId
+router.post('/:jobId', generateInterviewPrep);
 
 module.exports = router;

@@ -1,11 +1,13 @@
 const express = require('express');
 const favoritesRoutes = require('./routes/favorites');
+const interviewRoutes = require('./routes/interview');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const axios = require('axios');
+
 
 
 
@@ -26,8 +28,12 @@ app.use(cors());
 app.use(express.json());
 app.use('/api', router);
 
+app.use('/api/interview-prep', interviewRoutes);
+
 //enables /api/favorites/:userId/:sourceId
 app.use('/api/favorites', favoritesRoutes);
+
+
 
 
 // Define PORT
@@ -40,6 +46,9 @@ const Favorite = require('./models/Favorite');
 const User = require('./models/User');
 const Application = require('./models/Application');
 const InterviewPrep = require('./models/InterviewPrep');
+
+
+
 
 // API ENPOINTS FOR JOBS
 // GET jobs saved in mongodb
@@ -309,17 +318,6 @@ router.delete('/applications/:id', async (req, res) => {
   }
 });
 
-// POST - create an interview prep 
-router.post('/interview-prep', async (req, res) => {
-  try {
-    const interviewPrep = new InterviewPrep(req.body);
-    await interviewPrep.save();
-    res.status(201).json({ message: 'Interview prep saved', data: interviewPrep });
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to save prep', error: err.message });
-  }
-});
-
 // Update an interview prep
 router.put('/interview-prep/:id', async (req, res) => {
   try {
@@ -412,6 +410,7 @@ app.get('/api/search-jobs', async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch jobs', error: err.message });
   }
 });
+
 
 
 // Connect to MongoDB and start server
