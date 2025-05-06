@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body {
+  background-color: white;
+}
+
 /* Define color variables */
 :root {
   --background: #ffffff;
