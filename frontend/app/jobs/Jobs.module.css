@@ -139,10 +139,11 @@
     background: none;
   }
   
-  body {
+ /*
+body {
     background-color: white;
   }
-
+*/
   .buttonGroup {
     display: flex;
     gap: 1rem;
