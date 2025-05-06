@@ -1,11 +1,11 @@
 [build]
   base    = "frontend"
-  publish = "/build"     # or "frontend/build" for Create React App
+  publish = "dist"             # or "build" — depends on your actual build output
   command = "npm run build"
 
 [[redirects]]
   from = "/api/*"
-  to = "https://your-backend-service.onrender.com/api/:splat"
+  to = "https://your-backend.onrender.com/api/:splat"
   status = 200
   force = true
 
