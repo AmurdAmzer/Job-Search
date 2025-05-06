@@ -3,38 +3,42 @@
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 
 export default function BookmarkButton({ job, savedIds, setSavedIds }) {
-  const jobId = job.sourceId || job.jobId || job._id || job.job_id;
-  const isSaved = savedIds.includes(jobId); // ✅ Use only prop
+  const sourceId = job.sourceId;
+  const isSaved = savedIds.includes(sourceId);
 
   const handleClick = async () => {
     const stored = JSON.parse(localStorage.getItem('user'));
     const userId = stored?.user?._id || stored?.user?.id;
 
-    if (!userId) {
-      alert('You must be logged in to save favorites.');
+    if (!userId || !sourceId) {
+      alert('Missing user ID or job ID.');
       return;
     }
 
     if (isSaved) {
-      // DELETE from backend
       try {
-        await fetch(`http://localhost:9999/api/favorites/${userId}/${jobId}`, {
+        const res = await fetch(`http://localhost:9999/api/favorites/${userId}/${encodeURIComponent(sourceId)}`, {
           method: 'DELETE',
         });
-        setSavedIds((prev) => prev.filter((id) => id !== jobId));
+
+        if (!res.ok) {
+          const errorData = await res.text();
+          console.error('❌ Failed to remove favorite from backend:', errorData);
+          return;
+        }
+
+        setSavedIds((prev) => prev.filter((id) => id !== sourceId));
       } catch (err) {
-        console.error('❌ Failed to remove favorite:', err);
+        console.error('❌ Request error while removing favorite:', err);
       }
     } else {
-      // POST to backend
       try {
         await fetch('http://localhost:9999/api/favorites', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             userId,
-            jobId,
-            sourceId: jobId,
+            sourceId,
             title: job.title || job.job_title,
             company: job.company || job.employer_name,
             location: job.location || 'Remote',
@@ -47,7 +51,8 @@ export default function BookmarkButton({ job, savedIds, setSavedIds }) {
             source: 'Manual',
           }),
         });
-        setSavedIds((prev) => [...prev, jobId]);
+
+        setSavedIds((prev) => [...prev, sourceId]);
       } catch (err) {
         console.error('❌ Failed to save favorite:', err);
       }

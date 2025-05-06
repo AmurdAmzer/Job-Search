@@ -64,53 +64,7 @@ export default function JobsPage() {
       setLoading(false);
     }
   };
-
-  // ✅ MODIFIED: Save favorite to MongoDB instead of localStorage
-  const handleSaveToFavorites = async (job) => {
-    const stored = JSON.parse(localStorage.getItem("user"));
-    const userId = stored?.user?._id || stored?.user?.id; //updated to access nested structure
-
-    if (!userId) {
-      alert("You must be logged in to save favorites.");
-      return;
-    }
-
-    const jobId = job._id || job.job_id || job.sourceId;
-    const isSaved = savedIds.includes(jobId);
-
-    if (isSaved) {
-      //call DELETE endpoint if backend supports it
-      setSavedIds((prev) => prev.filter((id) => id !== jobId));
-      return;
-    }
-
-    try {
-      await fetch("http://localhost:9999/api/favorites", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId,
-          jobId,
-          title: job.title || job.job_title,
-          company: job.company || job.employer_name,
-          location: job.location || "Remote",
-          description: job.description || job.job_description || "",
-          requirements: [],
-          salary: {},
-          jobType: "Remote",
-          applicationDeadline: null,
-          externalUrl: job.externalUrl || job.job_apply_link || "#",
-          source: "Manual",
-          sourceId: jobId,
-        }),
-      });
-
-      setSavedIds((prev) => [...prev, jobId]);
-    } catch (err) {
-      console.error("❌ Failed to save favorite:", err);
-    }
-  };
-
+ 
   return (
     <>
       <LoggedInHeader />
@@ -140,8 +94,9 @@ export default function JobsPage() {
         <div className={styles.jobGrid}>
           {jobs.length > 0 ? (
             jobs.map((job, index) => {
-              const jobId = job._id || job.job_id || job.sourceId;
+              const jobId = job.sourceId || job.jobId || job._id || job.job_id;
               const isSaved = savedIds.includes(jobId); // UPDATED
+              const enrichedJob = { ...job, sourceId: jobId }; // Ensure BookmarkButton gets sourceId
 
               return (
                 <div key={index} className={styles.jobCard}>
@@ -168,7 +123,7 @@ export default function JobsPage() {
                     >
                       Apply Now
                     </a>
-                    <BookmarkButton job={job} savedIds={savedIds} setSavedIds={setSavedIds} />
+                    <BookmarkButton job={enrichedJob} savedIds={savedIds} setSavedIds={setSavedIds} />
                   </div>
                 </div>
               );

@@ -24,7 +24,7 @@ export default function FavoritesPage() {
         const res = await fetch(`http://localhost:9999/api/favorites/${userId}`);
         const data = await res.json();
         setFavorites(data);
-        const ids = data.map((job) => job.sourceId || job.jobId); // Extract IDs
+        const ids = data.map((job) => job.sourceId); // Always use sourceId
         setSavedIds(ids);
       } catch (err) {
         console.error('❌ Failed to fetch favorites:', err);
@@ -64,7 +64,9 @@ export default function FavoritesPage() {
         ) : (
           <div className={styles.jobGrid}>
             {filteredFavorites.map((job) => {
-              const jobId = job.sourceId || job.jobId;
+              const jobId = job.sourceId;
+              const enrichedJob = { ...job, sourceId: job.sourceId || job.jobId || job._id };
+              
               return (
                 <div key={job._id} className={styles.jobCard}>
                   <h2 className={styles.jobTitle}>{job.title}</h2>
@@ -83,18 +85,21 @@ export default function FavoritesPage() {
     >
       Apply Now
     </a>
-    <BookmarkButton
-      job={job}
-      savedIds={savedIds}
-      setSavedIds={(updatedIds) => {
-        setSavedIds(updatedIds);
-        if (!updatedIds.includes(jobId)) {
-          setFavorites((prev) =>
-            prev.filter((j) => (j.sourceId || j.jobId) !== jobId)
-          );
-        }
-      }}
-    />
+
+<BookmarkButton
+  job={enrichedJob}
+  savedIds={savedIds}
+  setSavedIds={(updater) => {
+    const newIds = typeof updater === 'function' ? updater(savedIds) : updater;
+    setSavedIds(newIds);
+
+    if (!newIds.includes(enrichedJob.sourceId)) {
+      setFavorites((prev) =>
+        prev.filter((j) => (j.sourceId || j.jobId || j._id) !== enrichedJob.sourceId)
+      );
+    }
+  }}
+/>
   </div>
 </div>
                 </div>
