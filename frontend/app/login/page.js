@@ -1,4 +1,4 @@
-// app/login/page.js
+
 "use client";
 
 import { useState } from "react"; //added for form state
@@ -32,7 +32,7 @@ export default function LoginPage() {
         return;
       }
 
-      // ✅ Save user and token
+      //Save user and token
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data));
 
@@ -52,7 +52,7 @@ export default function LoginPage() {
           <div className={styles.formContainer}>
             <h1 className={styles.title}>Log In</h1>
             <p className={styles.subtitle}>
-              Lorem ipsum dolor sit amet adipiscing elit.
+            Welcome back! Log in to continue your job search journey.
             </p>
 
             {/* input now uses state */}

@@ -15,7 +15,7 @@ export default function Header() {
       <nav className={styles.nav}>
         <a href="/aboutus">About Us</a>
         {/*<a href="#">My Profile</a> */}
-        <a href="#">Resources</a>
+        {/* <a href="#">Resources</a> */}
       </nav>
       <Link href="/login" className={styles.signupBtn}>Log In</Link>
       {/* <button className={styles.signupBtn}>Sign Up</button> */}

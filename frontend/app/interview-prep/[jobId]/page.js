@@ -47,7 +47,7 @@ export default function InterviewPrepPage() {
         });
   
         const result = await prepRes.json();
-        console.log('🧠 Prep API Response:', result); // <-- DEBUG LOG
+        console.log('🧠 Prep API Response:', result); //DEBUG LOG
   
         if (!prepRes.ok) throw new Error(result.error || 'Failed to generate prep');
   

@@ -80,7 +80,7 @@ export default function SignUpPage() {
           </div>
         </div>
         <div className={styles.imageContainer}>
-          <div className={styles.placeholder}>📄</div>
+        <img src="/shake.jpg" alt="Sign up visual" className={styles.signupImage} />
         </div>
       </main>
       <Footer />

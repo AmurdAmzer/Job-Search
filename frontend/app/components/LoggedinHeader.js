@@ -10,12 +10,13 @@ export default function LoggedInHeader() {
   const router = useRouter();
   const [initial, setInitial] = useState("?");
 
-  // ✅ Get user's name initial from localStorage
+  //Get user's name initial from localStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user?.name) {
-        setInitial(user.name.charAt(0).toUpperCase());
+      const stored = JSON.parse(localStorage.getItem("user"));
+      const name = stored?.user?.name;
+      if (name) {
+        setInitial(name.charAt(0).toUpperCase());
       }
     }
   }, []);

@@ -9,7 +9,7 @@ export default function Footer() {
       <div className={styles.footerTop}>
         <div>
           <Image
-            src="/logo.png"  // <-- this loads your logo from /public/logo.png
+            src="/logo.png"  //loads your logo from /public/logo.png
             alt="Work Wing Logo" 
             width={150} 
             height={50} 
