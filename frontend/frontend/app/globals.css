@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* Define color variables */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Work Wing Theme Colors */
+  --primary-color: #0A2540;   
+  --accent-color: #0070F3;    /* Vibrant Blue - Button Hover/Highlight */
+  --secondary-bg: #F5F7FA;    /* Light Gray Background for Sections */
+  --text-color: #333333;      /* Main text color */
+  --text-light: #666666;      /* Lighter subtext color */
+  --white: #ffffff;           /* Pure white */
+
+  /* Fonts */
+  --font-sans: 'Poppins', 'Arial', sans-serif;
+}
+
+/* Tailwind Theme Inline (Optional, if using Tailwind's inline theming) */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+}
+
+/* Dark Mode Theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* Global Base Styles */
+body {
+  background: var(--background);
+  color: var(--text-color);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Links */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+/* Buttons */
+button {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--accent-color);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Paragraphs */
+p {
+  margin-bottom: 1rem;
+  color: var(--text-light);
+}
+
+/* Lists */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Sections */
+section {
+  padding: 4rem 2rem;
+}
