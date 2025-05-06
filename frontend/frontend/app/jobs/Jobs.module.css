@@ -139,9 +139,10 @@
     background: none;
   }
   
-  body {
+  /* WE MIGHT NEED TO REDO THIS?... */
+  /* body {
     background-color: white;
-  }
+  } */
 
   .buttonGroup {
     display: flex;
