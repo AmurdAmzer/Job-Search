@@ -86,3 +86,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+module.exports = LoginPage; 
