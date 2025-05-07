@@ -17,7 +17,7 @@ export default function BookmarkButton({ job, savedIds, setSavedIds }) {
 
     if (isSaved) {
       try {
-        const res = await fetch(`http://localhost:9999/api/favorites/${userId}/${encodeURIComponent(sourceId)}`, {
+        const res = await fetch(`https://job-search-1-k9sx.onrender.com/api/favorites/${userId}/${encodeURIComponent(sourceId)}`, {
           method: 'DELETE',
         });
 
@@ -33,7 +33,7 @@ export default function BookmarkButton({ job, savedIds, setSavedIds }) {
       }
     } else {
       try {
-        await fetch('http://localhost:9999/api/favorites', {
+        await fetch('https://job-search-1-k9sx.onrender.com/api/favorites', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

@@ -21,14 +21,14 @@ export default function DashboardPage() {
     if (id) {
       setUserId(id);
       fetchNotes(id);
-      fetch(`http://localhost:9999/api/favorites/${id}`)
+      fetch(`https://job-search-1-k9sx.onrender.com/api/favorites/${id}`)
         .then(res => res.json())
         .then(data => setJobsCount(data.length));
     }
   }, []);
 
   const fetchNotes = async (id) => {
-    const res = await fetch(`http://localhost:9999/api/dashboard/${id}`);
+    const res = await fetch(`https://job-search-1-k9sx.onrender.com/api/dashboard/${id}`);
     const data = await res.json();
     setSavedNotes(data.savedNotes || []);
   };
@@ -40,7 +40,7 @@ export default function DashboardPage() {
     }
 
     const newNote = { title: notesTitle, content: notes };
-    const res = await fetch(`http://localhost:9999/api/dashboard/${userId}`, {
+    const res = await fetch(`https://job-search-1-k9sx.onrender.com/api/dashboard/${userId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ newNote }),
@@ -56,7 +56,7 @@ export default function DashboardPage() {
     const confirmed = confirm('Are you sure you want to delete this note?');
     if (!confirmed) return;
 
-    await fetch(`http://localhost:9999/api/dashboard/${userId}/note/${noteId}`, {
+    await fetch(`https://job-search-1-k9sx.onrender.com/api/dashboard/${userId}/note/${noteId}`, {
       method: 'DELETE',
     });
 
@@ -64,7 +64,7 @@ export default function DashboardPage() {
   };
 
   const saveEditedNote = async (note) => {
-    await fetch(`http://localhost:9999/api/dashboard/${userId}/note/${note._id}`, {
+    await fetch(`https://job-search-1-k9sx.onrender.com/api/dashboard/${userId}/note/${note._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: note._editTitle, content: note._editContent }),

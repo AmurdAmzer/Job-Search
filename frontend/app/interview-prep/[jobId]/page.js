@@ -23,7 +23,7 @@ export default function InterviewPrepPage() {
           return;
         }
   
-        const jobRes = await fetch(`http://localhost:9999/api/favorites/${userId}`);
+        const jobRes = await fetch(`https://job-search-1-k9sx.onrender.com/api/favorites/${userId}`);
         const jobs = await jobRes.json();
         const selectedJob = jobs.find(j => j._id === jobId || j.sourceId === jobId);
   
@@ -35,7 +35,7 @@ export default function InterviewPrepPage() {
   
         setJob(selectedJob);
   
-        const prepRes = await fetch(`http://localhost:9999/api/interview-prep/${selectedJob._id || selectedJob.sourceId}`, {
+        const prepRes = await fetch(`https://job-search-1-k9sx.onrender.com/api/interview-prep/${selectedJob._id || selectedJob.sourceId}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
