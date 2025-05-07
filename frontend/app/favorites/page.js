@@ -23,7 +23,7 @@ export default function FavoritesPage() {
       }
 
       try {
-        const res = await fetch(`http://localhost:9999/api/favorites/${userId}`);
+        const res = await fetch(`https://job-search-1-k9sx.onrender.com/api/favorites/${userId}`);
         const data = await res.json();
         setFavorites(data);
         const ids = data.map((job) => job.sourceId); // Always use sourceId

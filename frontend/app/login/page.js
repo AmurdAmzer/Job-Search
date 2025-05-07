@@ -20,7 +20,7 @@ export default function LoginPage() {
   const handleLogin = async () => {
     setError('');
     try {
-      const res = await fetch('http://localhost:9999/api/users/login', {
+      const res = await fetch('https://job-search-1-k9sx.onrender.com/api/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
