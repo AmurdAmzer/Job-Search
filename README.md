@@ -2,7 +2,6 @@ Job Search App - WORK WING
 A modern, full-stack MERN job discovery and tracking platform where users can explore job listings, save their favorites, register/login, and manage applications.
 
 
-
 Live Demo
 Live Site: https://dashing-crostata-0f72fb.netlify.app
 GitHub Repository: https://github.com/AmurdAmzer/Job-Search/tree/main
