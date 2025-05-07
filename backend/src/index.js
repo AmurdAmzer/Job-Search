@@ -1,6 +1,7 @@
 const express = require('express');
 const favoritesRoutes = require('./routes/favorites');
 const interviewRoutes = require('./routes/interview');
+const dashboardRoutes = require('./routes/dashboard');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
@@ -32,9 +33,7 @@ app.use('/api/interview-prep', interviewRoutes);
 
 //enables /api/favorites/:userId/:sourceId
 app.use('/api/favorites', favoritesRoutes);
-
-
-
+app.use('/api/dashboard', dashboardRoutes);
 
 // Define PORT
 const PORT = process.env.PORT || 9999;
