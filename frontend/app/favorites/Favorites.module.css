@@ -163,3 +163,21 @@
   max-width: 100%;
   font-size: 1rem;
 }
+
+.textArea {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  margin-top: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.4rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}

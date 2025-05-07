@@ -38,7 +38,7 @@ export default function LoggedInHeader() {
         {/*<Link href="/account-settings">Account Settings</Link> */}
         <Link href="/favorites">Favorites</Link>
         <Link href="/jobs">Job Listings</Link>
-        <Link href="/messages">Messages</Link>
+        <Link href="/dashboard">Dashboard</Link>
 
         {/*Avatar + Logout Button Section */}
         <div className={styles.userSection}>
